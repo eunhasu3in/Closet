@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Closet</string>
+    <string name="camera">카메라</string>
+    <string name="gallery">갤러리</string>
+</resources>

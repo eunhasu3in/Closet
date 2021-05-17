@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -44,7 +45,7 @@ class ClothesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clothes)
-        setPermission()
+
 
         // + 버튼 클릭 시
         btn_add.setOnClickListener{
@@ -77,13 +78,14 @@ class ClothesActivity : AppCompatActivity() {
      * 플러팅 버튼 이벤트 처리
      */
 
-    private fun onAddButtonClicked() {
+    fun onAddButtonClicked() {
         setVisibility(clicked)
         setAnimation(clicked)
         setClickable(clicked)
         clicked = !clicked
     }
-    private fun setVisibility(clicked: Boolean) {
+
+    fun setVisibility(clicked: Boolean) {
         if(!clicked) {
             btn_gallery.visibility = View.VISIBLE
             btn_camera.visibility = View.VISIBLE
@@ -97,7 +99,7 @@ class ClothesActivity : AppCompatActivity() {
             btn_add.backgroundTintList = AppCompatResources.getColorStateList(this, R.color.white)
         }
     }
-    private fun setAnimation(clicked: Boolean) {
+    fun setAnimation(clicked: Boolean) {
         if(!clicked) {
             btn_gallery.startAnimation(fromBottom)
             btn_camera.startAnimation(fromBottom)
@@ -113,7 +115,7 @@ class ClothesActivity : AppCompatActivity() {
         }
     }
 
-    private fun setClickable(clicked: Boolean) {
+    fun setClickable(clicked: Boolean) {
         if(!clicked) {
             btn_gallery.isClickable = true
             btn_camera.isClickable = true
@@ -127,7 +129,7 @@ class ClothesActivity : AppCompatActivity() {
         }
     }
 
-    private fun takeCapture() {
+    fun takeCapture() {
         // 기본 카메라 앱 실행
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -162,25 +164,7 @@ class ClothesActivity : AppCompatActivity() {
             .apply { currentPhotoPath = absolutePath }
     }
 
-    /**
-     * 테드 퍼미션 설정
-     */
-    private fun setPermission() {
-        val permission = object : PermissionListener {
-            override fun onPermissionGranted() { // 설정해놓은 위험 권한들이 허용되었을 경우 이곳을 수행함.
-                Toast.makeText(this@ClothesActivity, "권한이 혀용 되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) { // 설정해놓은 위험 권한들 중 거부를 한 경우 이곳을 수행함.
-                Toast.makeText(this@ClothesActivity, "권한이 거부 되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        TedPermission.with(this)
-            .setPermissionListener(permission)
-            .setRationaleMessage("카메라 앱을 사용하시려면 권한을 허용해주세요.")
-            .setDeniedMessage("권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 허용해주세요.")
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
-            .check()
-    }
+
 
     // startAcitivityForResult를 통해서 기본 카메라 앱으로부터 받아온 사진 결과 값
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

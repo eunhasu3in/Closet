@@ -31,11 +31,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // 레이아웃과 연결
         setContentView(R.layout.activity_main)
-        val clothesActivity = ClothesActivity()
+
         Log.d(TAG, "MainActivity - onCreate() called")
-        bottom_nav.setOnNavigationItemSelectedListener(onBottomNavItemSeletedListener)
+
         setPermission() // 권한을 체크하는 메소드 수행
 
+        // 바텀 네비게이션
+        bottom_nav.setOnNavigationItemSelectedListener(onBottomNavItemSeletedListener)
         homeFragment = HomeFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragments_frame, homeFragment).commit() // add는 프레그먼트 추가해주는 것
 

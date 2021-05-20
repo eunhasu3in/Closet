@@ -139,6 +139,7 @@ class ClothesActivity : AppCompatActivity() {
                     null
                 }
                 photoFile?.also{
+                    // photoURI는 원본파일 저장하는 경로
                     val photoURI : Uri = FileProvider.getUriForFile(
                         this,
                         "com.example.closet.fileprovider",
